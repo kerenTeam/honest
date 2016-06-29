@@ -1,0 +1,174 @@
+@charset "UTF-8";
+.info_nav{
+	position: relative;
+}
+.info_nav>a{
+	position: absolute;
+	 right: .1rem;
+	 top: .1rem;
+	 width: 5%;
+}
+.info_nav>a img{
+	width: 100%;
+}
+.info_nav ul{
+	margin-right: .4rem;
+}
+
+/* 频道页面 */
+.channel_body{
+	padding: .1rem;
+}
+.mychannel a {
+	overflow: hidden;
+	display: block;
+}
+.mychannel a img{
+	width: .25rem;
+	float: right;
+}
+.channel_click {
+	overflow: hidden;
+   margin: .1rem 0;
+} 
+.channel_click span.one{
+	float: left;
+	font-weight: 500;
+	font-size: .17rem;
+}
+.channel_click span.two{
+	float: right;
+	font-size: .14rem;
+	color: #509ee2;
+	border: 1px solid #509ee2;
+	border-radius: .5rem;
+	padding: 0 .05rem;
+}
+#delete_btn_two{
+	display: none;
+}
+.channel_list{
+	overflow: hidden;
+}
+.channel_list ul{
+	margin-right: -5%;
+	margin-left: 1%;
+}
+.channel_list ul li{
+	float: left;
+	    width: 21%;
+	    margin-right: 3%;
+	    margin-top: .14rem;
+	    box-sizing: border-box;
+	    text-align: center;
+	    border: 1px solid #dcdcdc;
+	    border-radius: .03rem;
+	    font-size: .13rem;
+	    padding: .04rem 0;
+	    color: #666;
+}
+.channel_list ul:after{
+	content: '';
+	clear: both;
+	display: block;
+}
+.addchannel{
+	margin-top: .5rem;
+}
+.channel_list input{
+	margin: 0 auto;
+	display: block;
+	width: 90%;
+	padding: 2%;
+	border: 1px solid #959595;
+	border-radius: .2rem;
+	padding-left: 9%;
+	box-sizing: border-box;
+	background: url(../images/channelseach.png) 0.08rem 0.08rem no-repeat;
+	background-size: 6%;
+} 
+.channel_list li img{
+	width: .15rem;
+	height: .15rem;
+}
+/* 频道搜索 */
+
+.seach_body{
+	background-color: #f4f4f4;
+}
+.seach_con{	
+	padding-left: 0.15rem;
+   margin: .1rem 0;
+}
+.recommend ul:after{
+	content: '';
+	clear: both;
+	display: block;
+}
+.recommend ul{
+	margin: 0 10%;
+	margin-right: 4%;
+}
+.recommend ul li{
+	float: left;
+	 width: 28%;
+	 margin-right: 5%;
+	 margin-top: .1rem;
+	 box-sizing: border-box;
+	 text-align: center;
+	 border: 1px solid #dcdcdc;
+	 border-radius: .03rem;
+	 font-size: .15rem;
+	 padding: .03rem 0;
+	 color: #666;
+	 background-color: #fff;
+}
+.infoseach_head .seach_btn{
+    width: 63%;
+    margin-left: 0.6rem;
+    display: block;
+    padding: 2% 9%;
+    border: none;
+    border-radius: .15rem;
+    background: url(../images/Home_12bai_03.png) 3% 53% no-repeat;
+    background-size: 7%;
+    background-color: #3983bf;
+    color: #fff;
+    font-size: .14rem;
+}
+header .seach_a{
+   top: 28%;
+} 
+.my_channel_list ul li{
+	position: relative;
+}
+.my_channel_list ul li .after{
+	/* content: '';  */
+	background-image: url(../images/chacha.png);
+	width: .18rem;
+	height: .18rem;
+	position: absolute;
+	background-size: contain;
+	background-repeat: no-repeat;
+	right: -.1rem;
+	top: -.1rem;
+	display: none;
+}
+/* 资讯信息详情 */
+.info_de_content h3{
+	text-align: center;
+	margin: .1rem 0;
+	font-size: .17rem;
+}
+.info_de_content {
+	padding: 0 .1rem;
+}
+.info_de_content img{
+	max-width: 100%;
+}
+.info_de_content span{
+	float: right;
+    margin-top: .3rem;
+    font-size: .14rem;
+    color: #999;
+} 
