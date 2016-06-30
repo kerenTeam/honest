@@ -211,6 +211,7 @@ class API_honest extends CI_Controller
 	//获取验证码
 	public function send()
 	{
+		//echo "1";
 		if($_GET){
 			$callback= $_GET['callback'];
 			$phone = json_decode($_GET['sendData'],true);
