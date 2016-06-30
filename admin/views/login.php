@@ -38,11 +38,11 @@
     <br>
 
     <form method="post" action="<?=site_url('login/adminlogin');?>" class="am-form">
-      <label for="email">用户名:</label>
-      <input type="text" name="username" id="usernmae" value="">
+      <label for="email">登录账号:</label>
+      <input type="text" name="phoneNumber" id="usernmae" value="">
       <br>
       <label for="password">密码:</label>
-      <input type="password" name="password" id="password" value="">
+      <input type="password" name="passWord" id="password" value="">
       <br>
       <label for="remember-me">
         <input id="remember-me" name="check" type="checkbox">
@@ -51,12 +51,17 @@
       <br />
       <br />
       <div class="am-cf">
-        <input type="submit" name="" value="登 录" class="am-btn am-btn-primary am-btn-sm am-fl">
+        <input type="submit" value="登 录" class="am-btn am-btn-primary am-btn-sm am-fl">
       </div>
     </form>
     <hr>
     <p>© 2014 - 2016 Honest, safe.</p>
   </div>
 </div>
-</body>
+</body>\
+<script type="text/javascript">
+    
+
+
+</script>
 </html>

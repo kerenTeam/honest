@@ -93,11 +93,18 @@ class Honestapi_model extends CI_Model
 	//登陆用户
 	public function Loginuser($data)
 	{
-		$where['phone'] = $data;
+		$where['phoneNumber'] = $data;
 		$query = $this->db->where($where)->get(self::TBL_MEMBER);
 		return $query->row_array();
  	}
 
+ 	// 修改密码
+ 	public function NewPassword($data,$phone)
+ 	{
+ 		$where['phoneNumber'] = $phone;
+ 		return $this->db->where($where)->update(self::TBL_MEMBER,$data); 
+
+ 	}
 }
 
 ?>

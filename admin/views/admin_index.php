@@ -8,7 +8,7 @@
     </div>
 
     <ul class="am-avg-sm-1 am-avg-md-4 am-margin am-padding am-text-center admin-content-list ">
-      欢迎管理员:&nbsp;&nbsp; <b><?=$_SESSION['username'];?></b>,进入城实安全后台管理！
+      欢迎管理员:&nbsp;&nbsp; <b><?=$_SESSION['users']['userName'];?></b>,进入城实安全后台管理！
     </ul>
 
   

@@ -2,15 +2,15 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
-*   交流互动
+*   API接口
+*   
 */
 class API_honest extends CI_Controller
 {
-	
 	function __construct()
 	{
 		parent::__construct();
-		
+		$this->load->model('honestapi_model');
 	}
 	// banner
 	public function banner()
@@ -26,9 +26,6 @@ class API_honest extends CI_Controller
 			}
 		}
 	}
-
-
-
 	// 资讯信息
 	public function consulting()
 	{	
@@ -139,20 +136,21 @@ class API_honest extends CI_Controller
 	// 注册用户
 	public function register(){
 
-		if($_POST){
+		if($_GET){
 			$callback = $_GET['callback'];
-			$arr = $_POST['params'];
-			var_dump($_POST);
+			$arr = json_decode($_GET['registerData'],true);
 			$data = array(
-				'phone' => $_GET['phoneNumber'],
-				'passWord' => $_GET['passWord'],
+				'phoneNumber' => $arr['phoneNumber'],
+				'passWord' => $arr['passWord'],
 			);
-			$user = $this->honestapi_model->Loginuser($arr['phoneNumber']);
+			$phone = $arr['phoneNumber'];
+			// echo "$callback($phone)";
+			$user = $this->honestapi_model->Loginuser($phone);
 			if($user != ''){
 				// 该用户已注册
 				echo "$callback(2)";
 			}else{
-				if($this->honestapi_model->Register($data)){
+				if($this->honestapi_model->Register($data )){
 					// 注册成功
 					echo "$callback(1)";
 				}else{
@@ -161,31 +159,73 @@ class API_honest extends CI_Controller
 				}
 			}
 		}
-
 	} 
-	// 登陆用户
-	public function login()
+	// 忘记密码
+	public function forgetpwd()
 	{
-		$json = json_decode(file_get_contents('php://input'), true);
-			var_dump($json);
-		if($_POST){
-
-			 
-			$user = $this->honestapi_model->Loginuser($json['phoneNumber']);
+		if($_GET){
+			$callback = $_GET['callback'];
+			$arr = json_decode($_GET['modifyPasswordData'],true);
+			$phone = $arr['phoneNumber'];
+			$data = array(
+					'passWord'=> $arr['newPassWord'],
+				);
+			$user = $this->honestapi_model->Loginuser($phone);
 			if(!empty($user)){
-				if(md5($arr['passWord']) != $user['passWord']){
-					// 密码错误
-					echo "2";
+				if($this->honestapi_model->NewPassword($data,$phone)){
+					// 修改成功
+					echo "$callback(1)"; 
 				}else{
-					// 登陆成功
-					echo "1";
+					// 修改失败
+					echo "$callback(2)";
 				}
 			}else{
 				// 没有该用户
-				echo "0";
+				echo "$callback(0)";
 			}
 		}
 	}
+
+	// 登陆用户
+	public function login()
+	{
+		if($_GET){
+			$callback = $_GET['callback'];
+			$data = json_decode($_GET['loginData'],true);
+			$user = $this->honestapi_model->Loginuser($data['phoneNumber']);
+			if(!empty($user)){
+				if($data['passWord'] != $user['passWord']){
+					// 密码错误
+					echo "$callback(2)"; 
+				}else{
+					// 登陆成功
+					echo "$callback(1)";
+				}
+			}else{
+				// 没有该用户
+				echo "$callback(0)";
+			}
+		}
+	}
+
+	//获取验证码
+	public function send()
+	{
+		if($_GET){
+			$callback= $_GET['callback'];
+			$phone = json_decode($_GET['sendData'],true);
+			// $ch = curl_init();
+		 //    $url = 'http://apis.baidu.com/kingtto_media/106sms/106sms?mobile='.$phone['phoneNumber'].'&content=%e3%80%90%e5%a4%a7%e5%8e%a8%e5%88%b0%e5%ae%b6%e3%80%91%e6%82%a8%e7%9a%84%e6%b3%a8%e5%86%8c%e9%aa%8c%e8%af%81%e7%a0%81%e4%b8%ba%ef%bc%9a'.randNms;
+		 //    $header = array('apikey: f8ae5ba4094b4d5134303eb87f7a115d');
+		 //    curl_setopt($ch, CURLOPT_HTTPHEADER  , $header);
+		 //    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		 //    curl_setopt($ch , CURLOPT_URL , $url);
+		 //    $res = curl_exec($ch);
+		    $code = randNms;
+		    echo "$callback($code)";
+		}
+	}
+
 
 	// 个人中心
 	

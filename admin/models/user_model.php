@@ -12,16 +12,12 @@ class User_model extends CI_Model
 	const TBL_MEMBER = 'member';
 
 	// 登陆操作
-	public function Login()
+	public function Login($data)
 	{
-		$pass = $this->input->post('password');
-
-		$this->db->where('userName',$this->input->post('username'));
-		$this->db->where('passWord',md5($pass));
-		$q = $this->db->get(self::TBL_MEMBER);
-		if($q->num_rows() > 0){
-			return $q->row();
-		} 
+		$where['phoneNumber'] = $data;
+		$where['groupId'] = '1';
+		$query = $this->db->where($where)->get(self::TBL_MEMBER);
+		return $query->row_array();
 	}
 
 

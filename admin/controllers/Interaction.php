@@ -18,7 +18,7 @@ class Interaction extends MY_Controller
 	public function iList()
 	{	
 		$data['interaction'] = $this->interaction_model->listinter();
-
+		
 		$this->load->view('interaction/interactionList',$data);
 		$this->load->view('footer');
 	}
@@ -26,9 +26,11 @@ class Interaction extends MY_Controller
 	// 新增交流互动
 	public function add()
 	{
-
-		$this->load->view('interaction/addInteraction');
-		$this->load->view('footer');
+		if($_POST){
+			var_dump($_POST);
+		}
+		// $this->load->view('interaction/addInteraction');
+		// $this->load->view('footer');
 	}
 
 	// 编辑交流互动

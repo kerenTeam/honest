@@ -20,7 +20,7 @@
 						<div class="am-u-sm-6 am-u-md-4">
 							<p>昵称：<?=$userinfo['userName'];?></p>
 							<p>性别：<?=$userinfo['gender'];?></p>
-							<p>手机号：<?=$userinfo['phone'];?></p>
+							<p>手机号：<?=$userinfo['phoneNumber'];?></p>
 						</div>
 						<div class="am-u-sm-6 am-u-md-4">
 							<p>所在地：<?=$userinfo['address'];?></p>

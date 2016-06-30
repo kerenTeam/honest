@@ -94,3 +94,11 @@ ul{
 .am-table-centered{
 	font-size: 1.4rem;
 }
+.modelHei{
+	max-height: 550px;
+	overflow-y: scroll;
+}
+.edui-container{
+	width: 100%;
+	margin-left: 0;
+}

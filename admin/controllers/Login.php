@@ -22,22 +22,27 @@ class Login extends CI_Controller
 	public function adminlogin()
 	{
 		if($_POST){
-			$this->form_validation->set_rules('username', 'Username', 'required');
-			$this->form_validation->set_rules('password', 'Password', 'required');
-			if ($this->form_validation->run()){
-				if($this->user_model->login()){
-					$session['username'] = $_POST['username'];
-					$this->session->set_userdata($session);
-					redirect('admin/index');
+			$phone = $this->input->post('phoneNumber');
+			$pwd = md5($this->input->post('passWord'));
+			$user = $this->user_model->Login($phone);
+			if($user){
+				if($pwd != $user['passWord']){
+					echo "<script>alert('密码输入错误！');history.go(-1);location.reload();</script>";exit;
 				}else{
-					
-				echo '<script>alert("登陆失败");</script>';
-				redirect('login/index');
+					$_SESSION['users'] = $user;
+					echo "<script>alert('登录成功！');window.location.href='".site_url('admin/index')."'</script>";exit;
 				}
+			}else{
+				echo "<script>alert('用户不存在！');history.go(-1);location.reload();</script>";exit;
 			}
 		}
 	}
 
+	public function loginOut()
+	{
+		unset($_SESSION['users']);
+		redirect('login/index');
+	}
 
 }
 

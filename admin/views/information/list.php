@@ -47,7 +47,7 @@
           <span data-am-modal-close
           class="am-close">&times;</span>
         </div>
-        <div class="am-popup-bd">
+        <div class="am-popup-bd modelHei">
           <form class="am-form am-padding-top am-padding-bottom" method="" action="">
 			<div class="am-g am-margin-top-sm">
 				<div class="am-u-sm-2 am-text-right">
@@ -100,10 +100,19 @@
 					图文
 				</div>
 				<div class="am-u-sm-8 am-u-end">
-					<br>
-					<br>
-					<br>
-					<br>
+					<!-- 编辑器 -->
+					<link href="assets/uediter/themes/default/css/umeditor.css" type="text/css" rel="stylesheet">
+					<script type="text/javascript" src="assets//uediter/third-party/jquery.min.js"></script>
+					<script type="text/javascript" charset="utf-8" src="assets/uediter/umeditor.config.js"></script>
+					<script type="text/javascript" charset="utf-8" src="assets/uediter/umeditor.js"></script>
+					<script type="text/javascript" src="assets/uediter/lang/zh-cn/zh-cn.js"></script>
+					<style>.edui-container{margin-left: 0;}</style>
+					<div style="width:100%">
+					  <script id="myEditor" type="text/plain" style="width:450px;height:500px;" name='postcontent'></script>
+					</div>
+					<script type="text/javascript">
+					var um = UM.getEditor('myEditor'); //实例化编辑器
+					</script>
 				</div>
 			</div>
 			<div class="am-g am-margin-top-sm">
@@ -141,86 +150,7 @@
 							<td>
 								<div class="am-btn-toolbar">
 									<div class="am-btn-group am-btn-group-xs">
-	                    				<a data-am-modal="{target: '#compile1'}" class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 编辑</a>
-
-	                    				<!-- 编辑弹出框 -->
-					                    <div class="am-popup" id="compile1">
-					                      <div class="am-popup-inner">
-					                        <div class="am-popup-hd">
-					                          <h4 class="am-popup-title">编辑</h4>
-					                          <span data-am-modal-close
-					                          class="am-close">&times;</span>
-					                        </div>
-					                        <div class="am-popup-bd">
-
-					                          <form class="am-form am-padding-top am-padding-bottom" method="" action="">
-													<div class="am-g am-margin-top-sm">
-														<div class="am-u-sm-2 am-text-right">
-															标题
-														</div>
-														<div class="am-u-sm-8 am-u-end">
-															<input type="text" class="am-input-sm" value="地震8周年" required>
-														</div>
-													</div>
-													<div class="am-g am-margin-top-sm">
-														<div class="am-u-sm-2 am-text-right">
-															发布人
-														</div>
-														<div class="am-u-sm-8 am-u-end">
-															<input type="text" class="am-input-sm" value="Uncle cat" required>
-														</div>
-													</div>
-													<div class="am-g am-margin-top-sm">
-														<div class="am-u-sm-2 am-text-right">
-															频道
-														</div>
-														<div class="am-u-sm-8 am-u-end">
-															<select data-am-selected="{btnSize: 'sm'}">
-																<option value="option1">政策</option>
-																<option value="option2">科技</option>
-																<option value="option3">法律</option>
-															</select>
-														</div>
-													</div>
-													<div class="am-g am-margin-top-sm">
-														<div class="am-u-sm-2 am-text-right">
-															简介
-														</div>
-														<div class="am-u-sm-8 am-u-end">
-															<textarea rows="4" required>生命是一条大河生命是一条大河生命是一条大河</textarea>
-														</div>
-													</div>
-													<div class="am-g am-margin-top-sm">
-														<div class="am-u-sm-2 am-text-right">
-															缩略图
-														</div>
-														<div class="am-u-sm-8 am-u-end">
-															<input type="file" id="imgUpload" name="fileimg" onchange="previewImage(this)" class="upload-add" required>
-												            <br>
-												            <div id="preview"> <img class="minImg" src="assets/img/Home_01_02.png"> </div>
-														</div>
-													</div>
-													<div class="am-g am-margin-top-sm">
-														<div class="am-u-sm-2 am-text-right">
-															图文
-														</div>
-														<div class="am-u-sm-8 am-u-end">
-															<br> 
-															<br>
-															<br>
-															<br>
-														</div>
-													</div>
-													<div class="am-g am-margin-top-sm">
-														<div class="am-u-sm-offset-2 am-u-sm-8 am-u-end">
-															<button type="button" class="am-btn am-btn-primary">确定</button>
-														</div>
-													</div>
-												</form>
-
-					                        </div>
-					                      </div>
-					                    </div>
+	                    				<a href="<?=site_url('information/compile');?>" class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 编辑</a>
 
 										<a href="#" class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash-o"></span> 删除</a>
 									</div>

@@ -11,7 +11,7 @@ class MY_Controller extends CI_Controller
 	{
 		parent::__construct();
 		//登陆验证
-		if (!$this->session->userdata('username')) {
+		if (!$this->session->userdata('users')) {
 			
 			redirect('login/index');
 		}

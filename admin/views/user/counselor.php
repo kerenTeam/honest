@@ -16,7 +16,7 @@
 				</div>
 			</form>
 		</div>
-	</div>
+	</div> 
 
 
     <!-- 问题解答列表 -->
@@ -36,7 +36,7 @@
 							<td><img class="imgSquare" src="<?=$val['headPicImg'];?>"></td>
 							<td><?=$val['userName'];?></td>
 							<td><?=$val['gender'];?></td>
-							<td><?=$val['phone'];?></td>
+							<td><?=$val['phoneNumber'];?></td>
 							<td><?=$val['address']?></td>
 							<td><?=$val['summary']?></td>
 							<td><?=$val['occupation'];?></td>
