@@ -18,6 +18,7 @@
   <link rel="stylesheet" href="assets/css/jPages.css">
   <link rel="stylesheet" href="assets/css/animate.css">
   <link rel="stylesheet" type="text/css" href="assets/css/app.css">
+  <script src="assets/js/jquery.min.js"></script>
 </head>
 <body>
 <!--[if lte IE 9]>

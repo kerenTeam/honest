@@ -16,10 +16,11 @@
 <![endif]-->
 
 <!--[if (gte IE 9)|!(IE)]><!-->
-<script src="assets/js/jquery.min.js"></script>
+<!-- <script src="assets/js/jquery.min.js"></script> -->
 <!--<![endif]-->
 <script src="assets/js/amazeui.min.js"></script>
 <script src="assets/js/jPages.js"></script>
+<script src="assets/js/imgup.js"></script>
 <script src="assets/js/ga.js"></script>
 <script src="assets/js/app.js"></script>
 </body>
