@@ -2,6 +2,9 @@
 error_reporting(E_ALL^E_NOTICE);
 
 /**
+ *
+ *
+ * 
  * CodeIgniter
  *
  * An open source application development framework for PHP

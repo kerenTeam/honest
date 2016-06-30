@@ -72,13 +72,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $active_group = 'default';
 $query_builder = TRUE;
-
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => '127.0.0.1',
-	'username' => 'root',
-	'password' => 'root',
-	'database' => 'hosnestsafe',
+	'hostname' => '211.149.195.183',
+	'username' => 'honest',
+	'password' => 'honestapp',
+	'database' => 'honest',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => 'honest_',
 	'pconnect' => FALSE,
