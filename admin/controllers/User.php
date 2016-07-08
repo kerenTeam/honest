@@ -190,6 +190,30 @@ class User extends MY_Controller
 		$this->load->view('user/search');
 		$this->load->view('footer');
 	}
+
+	// 安监局
+	public function safety()
+	{
+
+		$this->load->view('user/safety');
+		$this->load->view('footer');
+	}
+
+	// 安监局编辑
+	public function cSafety()
+	{
+
+		$this->load->view('user/compileSafety');
+		$this->load->view('footer');
+	}
+
+	// 安监局详情
+	public function safetyInfo()
+	{
+
+		$this->load->view('user/safetyInfo');
+		$this->load->view('footer');
+	}
 }
 
 

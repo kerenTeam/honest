@@ -64,6 +64,16 @@
      <!--    <li><a href="<?=site_url('safe/index');?>"><span class="am-icon-fax"></span> 安全查询</a></li>
         <li><a href="<?=site_url('consult/index');?>"><span class="am-icon-file-text-o"></span> 咨询管理</a></li> -->
         <li class="admin-parent">
+          <a class="am-cf" data-am-collapse="{target: '#collapse-nav'}"><span class="am-icon-edit"></span> 信息审核 <span class="am-icon-angle-right am-fr am-margin-right"></span></a>
+          <ul class="am-list am-collapse admin-sidebar-sub" id="collapse-nav">
+            <!-- <li><a href="admin-user.html" class="am-cf"><span class="am-icon-check"></span> 个人资料<span class="am-icon-star am-fr am-margin-right admin-icon-yellow"></span></a></li>
+            <li><a href="admin-help.html"><span class="am-icon-puzzle-piece"></span> 帮助页</a></li>
+            <li><a href="admin-gallery.html"><span class="am-icon-th"></span> 相册页面<span class="am-badge am-badge-secondary am-margin-right am-fr">24</span></a></li> -->
+            <li><a href="<?=site_url('auditing/weixin');?>"><span class="am-icon-weixin"></span> 微信提交</a></li>
+            <li><a href="<?=site_url('auditing/safety');?>"><span class="am-icon-gavel"></span> 安监局发布</a></li>
+          </ul>
+        </li>
+        <li class="admin-parent">
           <a class="am-cf" data-am-collapse="{target: '#operating'}"><span class="am-icon-server"></span> 运营工具 <span class="am-icon-angle-right am-fr am-margin-right"></span></a>
           <ul class="am-list am-collapse admin-sidebar-sub" id="operating">
             <li><a href="<?=site_url('operating/material');?>"><span class="am-icon-pencil-square"></span> 素材管理</a></li>
@@ -73,13 +83,14 @@
           </ul>
         </li>
         <li class="admin-parent">
-          <a class="am-cf" data-am-collapse="{target: '#collapse-nav'}"><span class="am-icon-user"></span> 用户管理 <span class="am-icon-angle-right am-fr am-margin-right"></span></a>
-          <ul class="am-list am-collapse admin-sidebar-sub" id="collapse-nav">
+          <a class="am-cf" data-am-collapse="{target: '#user'}"><span class="am-icon-user"></span> 用户管理 <span class="am-icon-angle-right am-fr am-margin-right"></span></a>
+          <ul class="am-list am-collapse admin-sidebar-sub" id="user">
             <!-- <li><a href="admin-user.html" class="am-cf"><span class="am-icon-check"></span> 个人资料<span class="am-icon-star am-fr am-margin-right admin-icon-yellow"></span></a></li>
             <li><a href="admin-help.html"><span class="am-icon-puzzle-piece"></span> 帮助页</a></li>
             <li><a href="admin-gallery.html"><span class="am-icon-th"></span> 相册页面<span class="am-badge am-badge-secondary am-margin-right am-fr">24</span></a></li> -->
             <li><a href="<?=site_url('user/userInfo');?>"><span class="am-icon-weixin"></span> 微信用户</a></li>
             <li><a href="<?=site_url('user/counselor');?>"><span class="am-icon-tablet"></span> 咨询师</a></li>
+            <li><a href="<?=site_url('user/safety');?>"><span class="am-icon-gavel"></span> 安监局</a></li>
           </ul>
         </li>
         <li class="admin-parent">
