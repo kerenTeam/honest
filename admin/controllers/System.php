@@ -55,6 +55,7 @@ class System extends MY_Controller
 		}
 	}
 
+
 	// 删除管理账户
 	public function deladminuser()
 	{
