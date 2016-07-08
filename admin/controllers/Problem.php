@@ -11,23 +11,32 @@ class Problem extends MY_Controller
 	{
 		parent::__construct();
 		$this->load->view('header');
+		$this->load->model('problem_model');
 	}
 
 	// 问题解答列表
 	public function problem()
 	{
-		
+		$data['problem'] = $this->problem_model->problemlist();
 
-		$this->load->view('problem/problemList');
+		$this->load->view('problem/problemList',$data);
 		$this->load->view('footer');
 	}
 
 	// 新增问题解答
 	public function add()
 	{
-
-		$this->load->view('problem/addproblem');
-		$this->load->view('footer');
+		if($_POST){
+			$data = $_POST;
+			$data['fromId'] = $_SESSION['users']['userId'];
+			var_dump($data);
+			if($this->problem_model->addproblem($data)){
+					echo "<script>alert('新增成功！');history.go(-1);location.reload();</script>";exit;
+			}else{
+					echo "<script>alert('新增失败！');history.go(-1);location.reload();</script>";exit;
+			}
+		}
+	
 	}
 
 	// 编辑问题解答
@@ -38,6 +47,8 @@ class Problem extends MY_Controller
 		$this->load->view('footer');
 	}
 
+	// 删除
+	
 }
 
 

@@ -27,7 +27,7 @@
 <![endif]-->
 <header class="am-topbar admin-header">
   <div class="am-topbar-brand amlogo">
-    <strong>诚实安全</strong> <small></small>
+  &nbsp;<img src="assets/img/LOGO.png" style="width: 50%;">
   </div>
 
   <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only" data-am-collapse="{target: '#topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span class="am-icon-bars"></span></button>
@@ -61,8 +61,8 @@
         <li><a href="<?=site_url('problem/problem');?>"><span class="am-icon-info-circle"></span> 问题解答</a></li>
         <li><a href="<?=site_url('information/lists');?>"><span class="am-icon-newspaper-o"></span> 资讯列表</a></li>
         <li><a href="<?=site_url('information/channel');?>"><span class="am-icon-navicon"></span> 频道管理</a></li>
-        <li><a href="<?=site_url('safe/index');?>"><span class="am-icon-fax"></span> 安全查询</a></li>
-        <li><a href="<?=site_url('consult/index');?>"><span class="am-icon-file-text-o"></span> 咨询管理</a></li>
+     <!--    <li><a href="<?=site_url('safe/index');?>"><span class="am-icon-fax"></span> 安全查询</a></li>
+        <li><a href="<?=site_url('consult/index');?>"><span class="am-icon-file-text-o"></span> 咨询管理</a></li> -->
         <li class="admin-parent">
           <a class="am-cf" data-am-collapse="{target: '#operating'}"><span class="am-icon-server"></span> 运营工具 <span class="am-icon-angle-right am-fr am-margin-right"></span></a>
           <ul class="am-list am-collapse admin-sidebar-sub" id="operating">
@@ -93,23 +93,15 @@
         <li class="admin-parent">
           <a class="am-cf" data-am-collapse="{target: '#system'}"><span class="am-icon-cog"></span> 系统管理 <span class="am-icon-angle-right am-fr am-margin-right"></span></a>
           <ul class="am-list am-collapse admin-sidebar-sub" id="system">
-            <li><a href="<?=site_url('system/user');?>"><span class="am-icon-users"></span> 用户管理</a></li>
-            <li><a href="<?=site_url('system/role');?>"><span class="am-icon-male"></span> 角色管理</a></li>
+            <li><a href="<?=site_url('system/user');?>"><span class="am-icon-users"></span> 后台管理用户</a></li>
+              <li><a href="<?=site_url('system/user');?>"><span class="am-icon-calendar"></span> banner管理</a></li>
+         <!--    <li><a href="<?=site_url('system/role');?>"><span class="am-icon-male"></span> 角色管理</a></li>
             <li><a href="<?=site_url('system/authority');?>"><span class="am-icon-eraser"></span> 权限管理</a></li>
-            <li><a href="<?=site_url('system/log');?>"><span class="am-icon-calendar"></span> 系统日志</a></li>
+            <li><a href="<?=site_url('system/log');?>"><span class="am-icon-calendar"></span> 系统日志</a></li> -->
           </ul>
         </li>
-        <!-- <li class="admin-parent">
-          <a class="am-cf" data-am-collapse="{target: '#user'}"><span class="am-icon-tablet"></span> 咨询师 <span class="am-icon-angle-right am-fr am-margin-right"></span></a>
-          <ul class="am-list am-collapse admin-sidebar-sub" id="user">
-            <li><a href="<?=site_url('counselor/index');?>"><span class="am-icon-user"></span> 用户管理</a></li>
-            <li><a href="<?=site_url('counselor/memorandum');?>"><span class="am-icon-pencil-square-o"></span> 备忘录</a></li>
-            <li><a href="<?=site_url('counselor/work');?>"><span class="am-icon-paste"></span> 工作历史</a></li>
-          </ul>
-        </li> -->
-       <!--  <li><a href="admin-table.html"><span class="am-icon-table"></span> 表格</a></li>
-        <li><a href="admin-form.html"><span class="am-icon-pencil-square-o"></span> 表单</a></li> -->
-        <li><a href="#"><span class="am-icon-sign-out"></span> 注销</a></li>
+      
+        <li><a href="<?=site_url('login/loginOut');?>"><span class="am-icon-sign-out"></span> 注销</a></li>
       </ul>
 
       <div class="am-panel am-panel-default admin-sidebar-panel">

@@ -12,6 +12,7 @@ class User extends MY_Controller
 		parent::__construct();
 		$this->load->view('header');
 		$this->load->model('user_model');
+		$this->load->library('upload');
 		
 	}
 
@@ -21,6 +22,49 @@ class User extends MY_Controller
 		$data['users'] = $this->user_model->Users('4');
 		$this->load->view('user/userInfo',$data);
 		$this->load->view('footer');
+	}
+
+	// 微信用户编辑
+	public function compile()
+	{
+		if($_GET){
+			$id = $_GET['id'];
+			$data['users']= $this->user_model->WeixinUserInfo($id);
+			$this->load->view('user/compileUser',$data);
+			$this->load->view('footer');
+		}
+		
+	}
+	// 编辑用户处理
+	public function editcompile()
+	{
+		if($_POST){
+			$id = $_POST['id'];
+			$data = array(
+				'userName' => $_POST['userName'],
+				'gender' => $_POST['gender'],
+				'address'=>$_POST['address'],
+				'occupation' => $_POST['occupation'],
+				'summary' => $_POST['summary'],
+			);
+			if (!empty($_FILES['picImg']['tmp_name'])) {
+                if ($this->upload->do_upload('picImg')) {
+                    //上传成功
+                    $fileinfo = $this->upload->data();
+                    $data['headPicImg'] = 'upload/' . $fileinfo['file_name'];
+                  } else {
+                    //上传失败
+                   echo "<script>alert('上传失败！');history.go(-1);location.reload();</script>";exit;
+                  }
+            }else{
+                $data['headPicImg']=$_POST['picImg'];
+            }
+          	if($this->user_model->uploaduser($id,$data)){
+          		   echo "<script>alert('修改成功！');window.location.href='userInfo';</script>";exit;
+          	}else{
+          		  echo "<script>alert('修改失败！');history.go(-1);location.reload();</script>";exit;
+          	}
+		}
 	}
 
 	// 用户详情
@@ -54,6 +98,78 @@ class User extends MY_Controller
 		$data['users'] = $this->user_model->Users('5');
 		$this->load->view('user/counselor',$data);
 		$this->load->view('footer');
+	}
+
+	// 新增咨询师
+	public function addCounselor()
+	{	
+		if($_POST){
+			$data = $_POST;
+			$data['groupId'] = '5';
+			if (!empty($_FILES['picImg']['tmp_name'])) {
+                if ($this->upload->do_upload('picImg')) {
+                    //上传成功
+                    $fileinfo = $this->upload->data();
+                    $data['headPicImg'] = 'upload/' . $fileinfo['file_name'];
+                  } else {
+                    //上传失败
+                   echo "<script>alert('上传失败！');history.go(-1);location.reload();</script>";exit;
+                  }
+            }
+            
+            if($this->user_model->Counseloradd($data)){
+            		echo "<script>alert('新增成功！');window.location.href='counselor';</script>";exit;
+            }else{
+            	echo "<script>alert('新增失败！');history.go(-1);location.reload();</script>";exit;
+            }
+
+
+		}
+	}	
+
+	// 咨询师编辑
+	public function complileCounselor()
+	{
+		if($_GET){
+			$id = $_GET['id'];
+			$data['users'] = $this->user_model->WeixinUserInfo($id);
+			// var_dump($userinfo); 
+			$this->load->view('user/complileCounselor',$data);
+			$this->load->view('footer');
+		}
+	
+	}
+
+	// 咨询师编处理
+	public function editcounselor()
+	{
+		if($_POST){
+			$id = $_POST['id'];
+			$data = array(
+				'userName' => $_POST['userName'],
+				'gender' => $_POST['gender'],
+				'address'=>$_POST['address'],
+				'occupation' => $_POST['occupation'],
+				'summary' => $_POST['summary'],
+			);
+			if (!empty($_FILES['picImg']['tmp_name'])) {
+                if ($this->upload->do_upload('picImg')) {
+                    //上传成功
+                    $fileinfo = $this->upload->data();
+                    $data['headPicImg'] = '../upload/' . $fileinfo['file_name'];
+                  } else {
+                    //上传失败
+                   echo "<script>alert('上传失败！');history.go(-1);location.reload();</script>";exit;
+                  }
+            }else{
+                $data['headPicImg']=$_POST['picImg'];
+            }
+          	if($this->user_model->uploaduser($id,$data)){
+          		   echo "<script>alert('修改成功！');window.location.href='counselor';</script>";exit;
+          	}else{
+          		  echo "<script>alert('修改失败！');history.go(-1);location.reload();</script>";exit;
+          	}
+		}
 	}
 
 	// 咨询师详情

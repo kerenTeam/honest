@@ -33,44 +33,19 @@
           class="am-close">&times;</span>
         </div>
         <div class="am-popup-bd">
-          <form class="am-form am-padding-top am-padding-bottom" method="" action="">
+          <form class="am-form am-padding-top am-padding-bottom" method="post" action="<?=site_url('problem/add')?>">
+ 
             <div class="am-g am-margin-top-sm">
               <div class="am-u-sm-2 am-text-right">
-                标题
+                问题内容
               </div>
               <div class="am-u-sm-8 am-u-end">
-                <input type="text" class="am-input-sm" required>
-              </div>
-            </div>
-            <div class="am-g am-margin-top-sm">
-              <div class="am-u-sm-2 am-text-right">
-                发布人
-              </div>
-              <div class="am-u-sm-8 am-u-end">
-                <input type="text" class="am-input-sm" required>
-              </div>
-            </div>
-            <div class="am-g am-margin-top-sm">
-              <div class="am-u-sm-2 am-text-right">
-                简介
-              </div>
-              <div class="am-u-sm-8 am-u-end">
-                <textarea rows="4" required></textarea>
-              </div>
-            </div>
-            <div class="am-g am-margin-top-sm">
-              <div class="am-u-sm-2 am-text-right">
-                缩略图
-              </div>
-              <div class="am-u-sm-8 am-u-end">
-                <input type="file" id="imgUpload" name="fileimg" onchange="previewImage(this)" class="upload-add" required>
-                      <br>
-                      <div id="preview"> <img class="minImg" src="assets/img/Home_01_02.png"> </div>
+                <textarea rows="4" required name="exchangeTitle"></textarea>
               </div>
             </div>
             <div class="am-g am-margin-top-sm">
               <div class="am-u-sm-offset-2 am-u-sm-8 am-u-end">
-                <button type="button" class="am-btn am-btn-primary">确定</button>
+                <button type="submit" class="am-btn am-btn-primary">确定</button>
               </div>
             </div>
           </form>
@@ -86,18 +61,18 @@
           <table class="am-table am-table-striped am-table-hover am-main am-table-centered am-table-bordered">
               <thead>
                 <tr>
-                  <th><input type="checkbox" class="allcheck"></th><th>ID</th><th class="table-title">缩略图</th><th class="table-type">标题</th><th class="table-type">简介</th><th class="table-type">发布人</th><th class="table-date am-hide-sm-only">发布日期</th><th class="table-set">操作</th>
+                  <th><input type="checkbox" class="allcheck"></th><th>ID</th><th class="table-type">问题内容</th><th >发布人</th><th class="table-date am-hide-sm-only">发布日期</th><th class="table-set">操作</th>
                 </tr>
             </thead>
             <tbody id="movies">
+            <?php foreach($problem as $val):?>
               <tr>
                 <td><input type="checkbox" class="checkList"></td>
-                <td>1</td>
-                <td><img class="imgSquare" src="assets/img/Home_01_02.png"></td>
-                <td>如何管理好工程安全项目</td>
-                <td>如何管理好工程安全项目如何管理好工程安全项目</td>
-                <td>asdf</td>
-                <td class="am-hide-sm-only">2014年9月4日 7:28:47</td>
+                <td><?=$val['questionId']?></td>
+          
+                <td><?=$val['exchangeTitle'];?></td>
+                <td><?=get_username($val['fromId'])?></td>
+                <td class="am-hide-sm-only"><?=$val['exchangeTime'];?></td>
                 <td>
                   <div class="am-btn-toolbar">
                     <div class="am-btn-group am-btn-group-xs">
@@ -114,40 +89,17 @@
                         <div class="am-popup-bd">
 
                           <form class="am-form am-padding-top am-padding-bottom" method="" action="">
+                       
+                           
                             <div class="am-g am-margin-top-sm">
                               <div class="am-u-sm-2 am-text-right">
-                                标题
+                                问题内容
                               </div>
                               <div class="am-u-sm-8 am-u-end">
-                                <input type="text" class="am-input-sm" value="如何管理好工程安全项目" required>
+                                <textarea rows="4" required><?=$val['exchangeTitle']?></textarea>
                               </div>
                             </div>
-                            <div class="am-g am-margin-top-sm">
-                              <div class="am-u-sm-2 am-text-right">
-                                发布人
-                              </div>
-                              <div class="am-u-sm-8 am-u-end">
-                                <input type="text" class="am-input-sm" value="asdf" required>
-                              </div>
-                            </div>
-                            <div class="am-g am-margin-top-sm">
-                              <div class="am-u-sm-2 am-text-right">
-                                简介
-                              </div>
-                              <div class="am-u-sm-8 am-u-end">
-                                <textarea rows="4" required>如何管理好工程安全项目如何管理好工程安全项目</textarea>
-                              </div>
-                            </div>
-                            <div class="am-g am-margin-top-sm">
-                              <div class="am-u-sm-2 am-text-right">
-                                缩略图
-                              </div>
-                              <div class="am-u-sm-8 am-u-end">
-                                <input type="file" id="imgUpload" name="fileimg" onchange="previewImage(this)" class="upload-add" required>
-                                      <br>
-                                      <div id="preview"> <img class="minImg" src="assets/img/Home_01_02.png"> </div>
-                              </div>
-                            </div>
+                           
                             <div class="am-g am-margin-top-sm">
                               <div class="am-u-sm-offset-2 am-u-sm-8 am-u-end">
                                 <button type="button" class="am-btn am-btn-primary">确定</button>
@@ -167,10 +119,11 @@
                   </div>
                 </td>
               </tr>
+            <?php endforeach;?>
             </tbody>
           </table>
         <div class="am-cf">
-            共 3 条记录
+            共 <?=count($problem);?> 条记录
             <div class="am-fr">
               <div class="holder"><a class="jp-previous jp-disabled">上一页</a><a class="jp-current">1</a><span class="jp-hidden">...</span><a href="#" class="">2</a><a href="#" class="">3</a><a href="#" class="">4</a><a href="#" class="">5</a><a href="#" class="jp-hidden">6</a><span>...</span><a>7</a><a class="jp-next">下一页</a></div>
             </div>

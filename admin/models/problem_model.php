@@ -17,6 +17,12 @@ class problem_model extends CI_Model
 		$query = $this->db->get(self::TBL_MYQUESTION);
 		return $query->result_array();
 	}
+
+	// 新增问题
+	public function addproblem($data)
+	{
+		return $this->db->insert(self::TBL_MYQUESTION,$data);
+	}
 	
 	
 }

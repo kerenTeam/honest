@@ -15,8 +15,11 @@ class User_model extends CI_Model
 	public function Login($data)
 	{
 		$where['phoneNumber'] = $data;
-		$where['groupId'] = '1';
-		$query = $this->db->where($where)->get(self::TBL_MEMBER);
+		// $where['groupId'] = '1';
+		$array = array(
+			'1','2'
+		);
+		$query = $this->db->where($where)->where_in('groupId',$array)->get(self::TBL_MEMBER);
 		return $query->row_array();
 	}
 
@@ -38,6 +41,34 @@ class User_model extends CI_Model
 	public function userdel($id){
 		$where['userId'] = $id;
 		return $this->db->where($where)->delete(self::TBL_MEMBER);
+	}
+
+	// 后台管理用户
+	public function adminUser()
+	{
+		$sql = "select * from honest_member where groupId=1 or groupId=2";
+		$query = $this->db->query($sql);
+		return $query->result_array();
+	}
+
+
+	//编辑用户资料
+	public function uploaduser($id,$data)
+	{
+		$where['userId'] = $id;
+		return $this->db->where($where)->update(self::TBL_MEMBER,$data);
+	}
+
+	// 新增咨询用户
+	public function Counseloradd($data)
+	{
+		return $this->db->insert(self::TBL_MEMBER,$data);
+	}
+
+	// 新增后台管理用户
+	public function AdminUseradd()
+	{
+		# code...
 	}
 
 

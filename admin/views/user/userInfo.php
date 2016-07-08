@@ -34,7 +34,7 @@
 					<?php foreach($users as $val):?>
 						<tr>
 							<td><?=$val['userId'];?></td>
-							<td><img class="imgSquare" src="<?=$val['headPicImg'];?>"></td>
+							<td><img class="imgSquare" src="../<?=$val['headPicImg'];?>"></td>
 							<td><?=$val['userName'];?></td>
 							<td><?=$val['gender'];?></td>
 							<td><?=$val['phoneNumber'];?></td>
@@ -46,8 +46,9 @@
 							<td>
 								<div class="am-btn-toolbar">
 									<div class="am-btn-group am-btn-group-xs">
-										<a href="<?=site_url('safe/index');?>" class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-fax"></span> 安全查询</a>
-										<a href="<?=site_url('consult/index');?>" class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-file-text-o"></span> 咨询管理</a>
+										<!-- <a href="<?=site_url('safe/index');?>" class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-fax"></span> 安全查询</a>
+										<a href="<?=site_url('consult/index');?>" class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-file-text-o"></span> 咨询管理</a> -->
+										<a href="<?=site_url('user/compile?id=').$val['userId'];?>" class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 编辑</a>
 										<a href="<?=site_url('user/deluser?id=').$val['userId'];?>" class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash-o"></span> 删除</a>
 									</div>
 								</div>

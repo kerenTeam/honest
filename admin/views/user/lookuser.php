@@ -38,7 +38,7 @@
 					<?php $tag = $userinfo['myTag']; $tags = json_decode($tag,true); ?>
 					<p>
 					<?php foreach($tags as $v):?>
-						<span><?=$v;?></span>
+						<span><?=$v['tagName'];?></span>
 					<?php endforeach;?></p>
 						<p></p>
 					</div>

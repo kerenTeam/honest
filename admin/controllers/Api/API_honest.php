@@ -11,6 +11,7 @@ class API_honest extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->model('honestapi_model');
+		 $this->load->library('upload');
 	}
 	// banner
 	public function banner()
@@ -18,73 +19,126 @@ class API_honest extends CI_Controller
 		if($_GET){
 			$callback = $_GET['callback'];
 			$banners = $this->honestapi_model->Banners();
-			$json = $banners['value'];
+			$data = json_decode($banners['value'],true);
+			foreach ($data as $key => $value) {
+				$data[$key]['bannerImg'] = IP.$value['bannerImg'];
+			}
+			$json = json_encode($data);
 			if(empty($banners)){
-				echo "0";
+				echo "$callback(0)";
 			}else{
 				echo "$callback($json)";
 			}
 		}
 	}
 	// 资讯信息
-	public function consulting()
+	public function findAllByInformation()
 	{	
 		if($_GET){
 			$callback = $_GET['callback'];
-			$list = $this->honestapi_model->Consulting();
+			$limit = json_decode($_GET['informationData'],true);
+			$size = $limit['pageSize'];
+			if($limit['currentPage'] != 1){
+				$page =$limit['currentPage']*$size-$size;
+			}else{
+				$page = $limit['currentPage'] -1;
+			}
+			$list = $this->honestapi_model->Consulting($page,$size);
+			foreach ($list as $key => $value) {
+				$list[$key]['picImg'] = IP.$value['picImg'];
+			}
 			$json = json_encode($list);
 			if(empty($list)){
-				echo '0';
+				//var_dump(NULL);
+				$a = 0;
+				echo "$callback($a)";
 			}else{
 				echo "$callback($json)";
 			}
 		}
 	}
 
-	// 咨询信息详情
-	public function consInfo(){
-		if($_GET){
-			$callback = $_GET['callback'];
-			$id= $_GET['id'];	
-			$listinfo = $this->honestapi_model->ConsultingInfo($id);
-			$json = json_encode($listinfo);
-			if(empty($listinfo)){
-				echo '0';
-			}else{
-				echo "$callback($json)";
-			}
-		}
-	}
+	// // 咨询信息详情
+	// public function consInfo(){
+	// 	if($_GET){
+	// 		$callback = $_GET['callback'];
+	// 		$id= $_GET['id'];	
+	// 		$listinfo = $this->honestapi_model->ConsultingInfo($id);
+	// 		foreach ($listinfo as $key => $value) {
+	// 			$listinfo[$key]['picImg'] = IP.$value['picImg'];
+	// 		}
+	// 		$json = json_encode($listinfo);
+	// 		if(empty($listinfo)){
+	// 			echo '0';
+	// 		}else{
+	// 			echo "$callback($json)";
+	// 		}
+	// 	}
+	// }
 
 	//交流互动
-	public function interacting()
+	public function findAll()
 	{
 		$callback = $_GET['callback'];
-		$interacting = $this->honestapi_model->Interacting();
+		$limit = json_decode($_GET['pageData'],true);
+		$page = $limit['currentPage'];
+		$size = $limit['pageSize'];
+		if($page != 1){
+			$page =$page*$size-$size;
+		}else{
+			$page = $page -1;
+		}
+		$interacting = $this->honestapi_model->Interacting($page,$size);
+		foreach ($interacting as $key => $value) {
+				$interacting[$key]['picImg'] = IP.$value['picImg'];
+			}
 		$json = json_encode($interacting);
 		if(empty($interacting)){
-			echo 0;
+			$a = 0;
+			echo "$callback($a)";
 		}else{
 			echo "$callback($json)";
 		}
 	}
-	// 交流互动详情
-	public function interactingInfo(){
-		$callback = $_GET['callback'];
-		$id = $_GET['id'];
-		$interinfo = $this->honestapi_model->InterInfo($id);
-		$pinid = json_decode($interinfo['comments'],true);
-		foreach ($pinid as $key => $value) {
-			$sql = "SELECT a.commentId, a.comment, a.recommentId, a.commentTime, b.userName, b.headPicImg FROM honest_member AS b, honest_comment AS a WHERE a.userId = b.userId AND a.commentId =$value";
-			$query = $this->db->query($sql);
-			$comment[$key] = $query->row_array();
-		}
-		$interinfo['comment'] = $comment;
-		$json = json_encode($interinfo);
-		if(empty($interinfo)){
-			echo "0";
-		}else{
-			echo "$callback($json)";
+	// 交流互动详情  + 咨询信息详情
+	public function InformationDeatil(){
+		if($_GET){
+			$callback = $_GET['callback'];
+			$get = json_decode($_GET['InformationDeatilData'],true);
+			$id = $get['homeId'];
+			// $id = $_GET['id'];
+			$sql1 = "SELECT a.publishId, a.title, a.content, a.picImg, a.publishData, a.comments, b.userName, b.headPicImg FROM honest_member as b, honest_mypublish as a where a.userId = b.userId and a.publishId = $id";
+			$query1 = $this->db->query($sql1);
+			$interinfo = $query1->row_array();
+			$interinfo['picImg'] = IP.$interinfo['picImg'];
+			$interinfo['headPicImg'] = IP.$interinfo['headPicImg'];
+
+			//$interinfo = $this->honestapi_model->InterInfo($id);
+			$pinid = json_decode($interinfo['comments'],true);
+			if(!empty($pinid)){
+				foreach ($pinid as $key => $value) {
+					$sql = "SELECT a.commentId, a.comment, a.recommentId, a.commentTime, b.userName, b.headPicImg,b.userId FROM honest_member AS b, honest_comment AS a WHERE a.userId = b.userId AND a.commentId =$value";
+					$query = $this->db->query($sql);
+					$comment[$key] = $query->row_array(); 
+				}
+				foreach ($comment as $k => $v) {
+					$comment[$k]['headPicImg'] = IP.$v['headPicImg'];
+				}
+				$interinfo['comment'] = $comment;
+				$interinfo['number'] = count($comment);
+				// echo "<pre>";
+				// var_dump($interinfo['comment']);
+			}else{
+				$interinfo['comment'] = '';
+				$interinfo['number'] = '0';
+			}
+	
+			if(empty($interinfo)){ 
+				echo "$callback(0)";
+			}else{ 
+				$json = json_encode($interinfo);
+				echo "$callback($json)";
+			}
 		}
 	}
 
@@ -94,17 +148,20 @@ class API_honest extends CI_Controller
 		if($_GET){
 			$callback = $_GET['callback'];
 			$problem = $this->honestapi_model->Problem();
+			foreach ($problem as $key => $value) {
+				$problem[$key]['headPicImg'] = IP.$value['headPicImg'];
+			}
 			$json = json_encode($problem);
 			if(empty($problem)){
-				echo "0";
+				echo "$callback(0)";
 			}else{
 				echo "$callback($json)";
 			}
 		}
 	}
 
-	// 频道管理
-	public function channel()
+	// 所有频道管理
+	public function channelTag()
 	{
 		$callback = $_GET['callback'];
 		$channel = $this->honestapi_model->Channel();
@@ -120,9 +177,11 @@ class API_honest extends CI_Controller
 	{
 		if($_GET){
 			$callback = $_GET['callback'];
-			$phone = $_GET['phone'];
-			$channel = $this->honestapi_model->MyChannel($phone);
+			$phone = json_decode($_GET['phoneNumberData'],true);
+			// echo $phone['phoneNumber'];
+			$channel = $this->honestapi_model->MyChannel($phone['phoneNumber']);
 			$json = $channel['myTag'];
+			// echo $json;
 			if(empty($json)){
 				$tag = $this->honestapi_model->Channel();
 				$tags = json_encode($tag);
@@ -199,6 +258,7 @@ class API_honest extends CI_Controller
 					echo "$callback(2)"; 
 				}else{
 					// 登陆成功
+					//$json = '{"result":1,"phoneNumber":"13453475486"}';
 					echo "$callback(1)";
 				}
 			}else{
@@ -211,10 +271,12 @@ class API_honest extends CI_Controller
 	//获取验证码
 	public function send()
 	{
-		//echo "1";
 		if($_GET){
 			$callback= $_GET['callback'];
 			$phone = json_decode($_GET['sendData'],true);
+			if(empty($phone['phoneNumber'])){
+				  echo "$callback(0)";
+			}else{
 			// $ch = curl_init();
 		 //    $url = 'http://apis.baidu.com/kingtto_media/106sms/106sms?mobile='.$phone['phoneNumber'].'&content=%e3%80%90%e5%a4%a7%e5%8e%a8%e5%88%b0%e5%ae%b6%e3%80%91%e6%82%a8%e7%9a%84%e6%b3%a8%e5%86%8c%e9%aa%8c%e8%af%81%e7%a0%81%e4%b8%ba%ef%bc%9a'.randNms;
 		 //    $header = array('apikey: f8ae5ba4094b4d5134303eb87f7a115d');
@@ -224,14 +286,198 @@ class API_honest extends CI_Controller
 		 //    $res = curl_exec($ch);
 		    $code = randNms;
 		    echo "$callback($code)";
+		    }
 		}
 	}
 
 
 	// 个人中心
+	public function personalcenter() 
+	{
+		if($_GET){
+			$callback= $_GET['callback'];
+			header('content-type:text/html;charset=utf8');
+			$phone = json_decode($_GET['accountData'],true);
+			$phone = $phone['phoneNumber'];
+			
+			$user = $this->honestapi_model->Loginuser($phone);
+	
+			$user['headPicImg'] = IP.$user['headPicImg'];
+			$myCertifi= json_decode($user['myCertificate'],true);
+			if($myCertifi != ''){
+				foreach ($myCertifi as $k => $v) {
+					$myCertifi[$k]['certificateImg'] = IP.$v['certificateImg']; 
+				}
+				$user['myCertificate'] = $myCertifi;
+			}else{
+				$user['myCertificate'] = '';
+			}
+			$json = json_encode($user);
+			if($user){
+				echo "$callback($json)";
+			}else{
+				$a = 0;
+				echo "$callback($a)";
+			}
+		}
+	}
+	
+	// 修改个人资料
 	
 
+	// 关于我的  +  点击tag返回 
+	public function tagformAll()
+	{
+		if($_GET){
+			$callback = $_GET['callback'];
+			$get = json_decode($_GET['myData'],true);
+				// 获取用户id
+			$user = $this->honestapi_model->Loginuser($get['phoneNumber']);
+				// 1 是我的回复  0是我的发布
+			if($get['state'] != 0){
+				// 我的发布
+				 $where['userId'] = $user['userId'];
+				 $postlist = $this->honestapi_model->MyRelease($where);
+				 
 
+			}else{
+				// 我的回复
+				$userid = $user['userId'];
+				$sql = "select questionId from honest_comment where userId = $userid group by questionId";
+				$query = $this->db->query($sql);
+				$comment = $query->result_array();
+
+				foreach($comment as $v){
+					$where['publishId'] = $v['questionId'];
+					$con[] = $this->honestapi_model->MyReply($where);
+				}
+				$list = array_filter($con);
+				foreach ($list as $key => $value) {
+					$postlist[] = $value;
+				}
+			}
+			// // 返回数据
+			if($postlist){
+				$json = json_encode($postlist);
+				echo "$callback($json)";
+			}else{
+				$a = 0;
+				echo "$callback($a)";
+			}
+		}
+	}
+
+	// 评论
+	public function goComment()
+	{	
+		if($_GET){
+			$callback = $_GET['callback'];
+			$get = json_decode($_GET['goCommentData'],true);
+			if(strlen($get['phoneNumber']) == 11){
+				$user = $this->honestapi_model->Loginuser($get['phoneNumber']);
+				$menterid = $user['userId'];
+			}else{
+				$menterid = $get['phoneNumber'];
+			}
+	
+			$data = array(
+				'questionId' => $get['publishId'],
+				'userId' => $menterid,
+				'recommentId' =>$get['recommentId'],
+				'comment' => $get['res']
+			);
+			if(empty($menterid) && empty($userId)){
+				$a = 0;
+				echo "$callback($a)";
+			}else{
+				if($this->honestapi_model->AddComment($data)){
+					$a= 1;
+					$sql2 = "select last_insert_id() as insertId";
+					$query = $this->db->query($sql2);
+					$id = $query->row_array();
+					$commentid = $id['insertId'];
+					$pubid = $get['publishId'];
+					$sql3 = "SELECT comments FROM honest_mypublish where publishId =$pubid";
+					$query = $this->db->query($sql3);
+					$interinfo = $query->row_array();
+					if(empty($interinfo)){
+						$commtdata['1'] = $commentid;
+					}else{
+						$commtdata = json_decode($interinfo['comments'],true);
+						$commtdata[] = $commentid;
+					}
+					$json = array('comments'=>json_encode($commtdata),);
+					// var_dump($json);
+					$this->honestapi_model->updatepublish($pubid,$json);
+					echo "$callback($a)";
+				}else{
+					$a = 0;
+					echo "$callback($a)";
+				}
+			}
+		}
+	}
+	// 咨询记录
+	public function consultingRecords()
+	{
+		if($_GET){
+			$callback = $_GET['callback'];
+			$phone = json_decode($_GET['informationAllData'],true);
+			$user = $this->honestapi_model->Loginuser($phone['phoneNumber']);
+			$userid = $user['userId'];
+			$sql = "SELECT a.questionId, a.fromId, a.toId, a.exchangeTitle, a.exchangeTime, b.userName from honest_myquestion as a, honest_member as b where a.toId=b.userId and a.fromId = $userid";
+			$query = $this->db->query($sql);
+			$post = $query->result_array();
+			if($post){
+				$json = json_encode($post);
+				echo "$callback($json)";
+			}else{
+				$a = 0;
+				echo "$callback($a)";
+			}
+		}
+	}
+
+
+	// 发布信息
+	public function ReleasInformatione()
+	{
+		if (!empty($_FILES['upload_file']['tmp_name'])) {
+            if ($this->upload->do_upload('upload_file')) {
+                //上传成功
+                $fileinfo = $this->upload->data();
+                $data = '../upload/' . $fileinfo['file_name'];
+                echo $data;
+                echo "1";
+              } else {
+                //上传失败
+             	echo "0";
+              }
+        }else{
+            
+            	echo "你还没有上传图片";
+        }
+
+		// if(move_uploaded_file($_FILES['upload_file']['tmp_name'],'/upload/img/' . $_FILES['upload_file']['name'])){
+		// echo "1";
+		// } else{
+		// 	echo "2";
+		// }
+		
+		// echo './upload/img/' . $_FILES['upload_file']['name'];
+  //       $data = 'This data is from server!' //返回数据，这行字将通过URL返回给浏览器
+
+  //      header('Location:' . $_POST['tmpurl'] . '?data=' . $_data); //上传完成后使iframe直接跳转至$_POST['tmpurl']
+
+	}
+
+
+
+	// 咨询记录
+	
+
+	// 发布问题
+	
 
 }
 
