@@ -15,7 +15,7 @@
 					</header>
 					<div class="am-panel-bd am-cf">
 						<div class="am-u-sm-6 am-u-md-4">
-							<img class="userimg2" src="<?=$userinfo['headPicImg'];?>" alt="用户头像">
+							<img class="userimg2" src="../<?=$userinfo['headPicImg'];?>" alt="用户头像">
 						</div>
 						<div class="am-u-sm-6 am-u-md-4">
 							<p>昵称：<?=$userinfo['userName']?></p>

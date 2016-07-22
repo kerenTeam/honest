@@ -5,12 +5,12 @@
 	</div>
 	<div class="am-g am-padding-bottom-lg">
 		<div class="am-u-sm-3 am-u-md-3" style="min-width: 300px;">
-			<form action="" method="">
+			<form action="<?=site_url('information/search');?>" method="post">
 				
 				<div class="am-input-group am-input-group-sm">
-					<input type="text" class="am-form-field">
+					<input type="text" class="am-form-field" name="sare">
 					<span class="am-input-group-btn">
-						<button class="am-btn am-btn-default" type="button"><span class="am-icon-search"></span>搜索</button>
+						<button class="am-btn am-btn-default" type="submit"><span class="am-icon-search"></span>搜索</button>
 					</span>
 				</div>
 			</form>
@@ -109,7 +109,7 @@
 					频道
 				</div>
 				<div class="am-u-sm-8 am-u-end">
-					<select data-am-selected="{btnSize: 'sm'}" name="tag">
+					<select multiple data-am-selected="{btnSize: 'sm'}" name="tag[]">
 					<?php foreach($tags as $val):?>
 						<option value="<?=$val['tag']?>"><?=$val['tagName']?></option>
 					<?php endforeach;?>
@@ -169,6 +169,7 @@
 						</tr>
 					</thead>
 					<tbody id="movies">
+					<?php if(!empty($consulting)): ?>
 					<?php foreach($consulting as $val):?>
 						<tr>
 							<td><input type="checkbox" class="checkList"></td>
@@ -190,6 +191,9 @@
 							</td>
 						</tr>
 					<?php endforeach;?>
+				<?php else:?>
+					<th colspan="9">暂无内容</th>
+				<?php endif;?>
 					</tbody>
 				</table>
         <div class="am-cf">

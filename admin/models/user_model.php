@@ -10,6 +10,10 @@ class User_model extends CI_Model
 
 	// 用户表
 	const TBL_MEMBER = 'member';
+	// 审核信息表
+	const TBL_APPLY = 'applymessage';
+	// 用户资料审核表
+	const TBL_USERINFO = 'userinfo';
 
 	// 登陆操作
 	public function Login($data)
@@ -65,12 +69,39 @@ class User_model extends CI_Model
 		return $this->db->insert(self::TBL_MEMBER,$data);
 	}
 
-	// 新增后台管理用户
-	public function AdminUseradd()
+	// 修改管理用户密码
+	public function EditPassWord($id,$data)
 	{
-		# code...
+		$where['userId'] = $id;
+		return $this->db->where($where)->update(self::TBL_MEMBER,$data);
 	}
 
+	// 修改用户分组
+	public function GetWeixinUser($id,$data)
+	{
+		$where['userId'] = $id;
+		return $this->db->where($where)->update(self::TBL_MEMBER,$data);
+	}
+
+	// 用户审核
+	public function UserWeixin()
+	{
+		$query = $this->db->get(self::TBL_APPLY);
+		return $query->result_array();
+	}
+	// 审核
+	public function editAdopt($id,$data)
+	{
+		$where['id'] = $id;
+		return $this->db->where($where)->update(self::TBL_APPLY,$data);
+	}
+
+	// 用户资料审核
+	public function AuditingUser()
+	{
+		$query = $this->db->get(self::TBL_USERINFO);
+		return $query->result_array();
+	}
 
 }
 

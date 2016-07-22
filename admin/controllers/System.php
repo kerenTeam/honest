@@ -12,14 +12,13 @@ class System extends MY_Controller
 		parent::__construct();
 		$this->load->view('header');
 		$this->load->model('user_model');
-			$this->load->library('upload');
+		$this->load->library('upload');
 	}
 
-	// 用户管理
+	// 后台用户管理
 	public function user()
 	{
 		$data['users'] = $this->user_model->adminUser();
-		
 		$this->load->view('system/adminUser',$data);
 		$this->load->view('footer');
 	}
@@ -68,6 +67,50 @@ class System extends MY_Controller
 			}
 		}
 	}
+
+	// 修改密码
+	public function exitPassword()
+	{
+		if($_POST){
+			$id = $_POST['id'];
+			$user = $this->user_model->WeixinUserInfo($id);
+			if(md5($_POST['passWord']) != $user['passWord']){
+				echo "<script>alert('原密码输入错误！');history.go(-1);location.reload();</script>";exit;
+			}
+			if($_POST['newpassword'] != $_POST['pwd']){
+				echo "<script>alert('确认密码和新密码不一致');history.go(-1);location.reload();</script>";exit;
+			}
+			$data['passWord'] = md5($_POST['newpassword']);
+			if($this->user_model->EditPassWord($id,$data)){
+				echo "<script>alert('修改成功！');history.go(-1);</script>";exit;
+			}else{
+				echo "<script>alert('修改失败！');history.go(-1);</script>";exit;
+			}
+		}
+	}
+
+	// 转出为微信用户
+	public function getweixinuser()
+	{
+		if($_GET){
+			$id = $_GET['id'];
+			$data['groupId'] = '4';
+			if($this->user_model->GetWeixinUser($id,$data)){
+				echo "<script>alert('成功！');history.go(-1);</script>";exit;
+			}else{
+				echo "<script>alert('失败！');history.go(-1);</script>";exit;
+			}
+		}
+	}
+
+	// banner  管理
+	public function banners()
+	{	
+		
+		$this->load->view('system/banners');
+		$this->load->view('footer');
+	}
+
 	// 角色管理
 	public function role()
 	{

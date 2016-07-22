@@ -78,6 +78,14 @@ class User extends MY_Controller
 			$this->load->view('footer');
 		}
 	}
+	// 用户资料审核
+	public function Auditing()
+	{
+		$data['users'] = $this->user_model->AuditingUser();
+
+		$this->load->view('user/auditing',$data);
+		$this->load->view('footer');
+	}
 
 	// 删除用户
 	public function deluser()
@@ -156,7 +164,7 @@ class User extends MY_Controller
                 if ($this->upload->do_upload('picImg')) {
                     //上传成功
                     $fileinfo = $this->upload->data();
-                    $data['headPicImg'] = '../upload/' . $fileinfo['file_name'];
+                    $data['headPicImg'] = 'upload/' . $fileinfo['file_name'];
                   } else {
                     //上传失败
                    echo "<script>alert('上传失败！');history.go(-1);location.reload();</script>";exit;
@@ -194,19 +202,78 @@ class User extends MY_Controller
 	// 安监局
 	public function safety()
 	{
-
-		$this->load->view('user/safety');
+		$data['users'] = $this->user_model->Users('6');
+		$this->load->view('user/safety',$data);
 		$this->load->view('footer');
 	}
+	// 新增安监局用户
+	public function addsafety($value='')
+	{
+		if($_POST){
+			$data = $_POST;
+			$data['groupId'] = '6';
+			if (!empty($_FILES['picImg']['tmp_name'])) {
+                if ($this->upload->do_upload('picImg')) {
+                    //上传成功
+                    $fileinfo = $this->upload->data();
+                    $data['headPicImg'] = 'upload/' . $fileinfo['file_name'];
+                  } else {
+                    //上传失败
+                   echo "<script>alert('上传失败！');history.go(-1);location.reload();</script>";exit;
+                  }
+            }else{
+                $data['headPicImg']='';
+            }
+            if($this->user_model->Counseloradd($data)){
+            		echo "<script>alert('新增成功！');history.go(-1);location.reload();</script>";exit;
+            }else{
+            	echo "<script>alert('新增失败！');history.go(-1);location.reload();</script>";exit;
+            }
 
+		}
+	}
 	// 安监局编辑
 	public function cSafety()
 	{
+		if($_GET){
+			$id = $_GET['id'];
+			$data['users'] = $this->user_model->WeixinUserInfo($id);
 
-		$this->load->view('user/compileSafety');
-		$this->load->view('footer');
+			$this->load->view('user/compileSafety',$data);
+			$this->load->view('footer');
+		}
 	}
-
+	// 安监局编辑操作
+	public function EditSafety()
+	{
+		if($_POST){
+			$id = $_POST['id'];
+			$data = array(
+				'userName' => $_POST['userName'],
+				'gender' => $_POST['gender'],
+				'address'=>$_POST['address'],
+				'occupation' => $_POST['occupation'],
+				'summary' => $_POST['summary'],
+			);
+			if (!empty($_FILES['picImg']['tmp_name'])) {
+                if ($this->upload->do_upload('picImg')) {
+                    //上传成功
+                    $fileinfo = $this->upload->data();
+                    $data['headPicImg'] = 'upload/' . $fileinfo['file_name'];
+                  } else {
+                    //上传失败
+                   echo "<script>alert('上传失败！');history.go(-1);location.reload();</script>";exit;
+                  }
+            }else{
+                $data['headPicImg']=$_POST['picImg'];
+            }
+          	if($this->user_model->uploaduser($id,$data)){
+          		   echo "<script>alert('修改成功！');window.location.href='safety';</script>";exit;
+          	}else{
+          		  echo "<script>alert('修改失败！');history.go(-1);location.reload();</script>";exit;
+          	}
+		}
+	}
 	// 安监局详情
 	public function safetyInfo()
 	{

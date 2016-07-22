@@ -24,6 +24,20 @@ class problem_model extends CI_Model
 		return $this->db->insert(self::TBL_MYQUESTION,$data);
 	}
 	
+	// 删除问提
+	public function delProblem($id)
+	{
+		$where['questionId'] = $id;
+		return $this->db->where($where)->delete(self::TBL_MYQUESTION);
+	}
+
+	//搜索
+	public function ProSearch($sear)
+	{
+		$query = $this->db->like('exchangeTitle', $sear, 'both')->order_by('exchangeTime','desc')->get(self::TBL_MYQUESTION);
+		return $query->result_array();
+	}
+	 
 	
 }
 

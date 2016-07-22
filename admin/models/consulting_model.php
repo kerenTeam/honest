@@ -50,13 +50,21 @@ class consulting_model extends CI_Model
 		return $this->db->where($where)->delete(self::TBL_MYPUB);
 	}
 
-	// 
+	// 根据tag返回数据
 	public function setTagconsult($tag,$commend)
 	{
 
-		$sql ="SELECT a.userName,b.publishId, b.picImg, b.tag, b.title, b.content, b.publishData from honest_member as a, honest_mypublish as b where a.userId = b.userId and b.tag = $tag and b.commend = $commend order by b.publishData desc";
+		$sql ="SELECT a.userName,b.publishId, b.picImg, b.tag, b.title, b.content, b.publishData from honest_member as a, honest_mypublish as b where a.userId = b.userId and b.tag like '%$tag%' and b.commend = $commend order by b.publishData desc";
 			$query = $this->db->query($sql);
 			return $query->result_array();
+	}
+
+	// 咨询搜索
+	public function ConsuleSearch($sear)
+	{
+		$where['commend'] = '1';
+		$query = $this->db->where($where)->like('title', $sear, 'both')->order_by('publishData','desc')->get(self::TBL_MYPUB);
+		return $query->result_array();
 	}
 }
 

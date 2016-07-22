@@ -15,6 +15,16 @@ class Interaction extends MY_Controller
 		 $this->load->library('upload');
 	}
 
+	// 根据tag返回数据
+	public function tagretutn()
+	{
+		$tag = '5';
+		$sql ="SELECT a.userName,b.publishId, b.picImg, b.tag, b.title, b.content, b.publishData from honest_member as a, honest_mypublish as b where a.userId = b.userId and b.commend = '0' and b.tag like '%$tag%'  order by b.publishData desc";
+		$query = $this->db->query($sql);
+		$list = $query->result_array();
+		echo "<pre>";
+		var_dump($list); 
+	}
 	// 交流互动列表
 	public function iList()
 	{	
@@ -46,8 +56,12 @@ class Interaction extends MY_Controller
 				'title' => $_POST['title'],
 				'userId' => $_SESSION['users']['userId'],
 				'content'=>$_POST['content'],
-				'tag' => $_POST['tag'],
+				
 			);
+			foreach ($_POST['tag'] as $key => $value) {
+				$tag[$key]['tagid'] = $value;
+			}
+			$data['tag'] = json_encode($tag);
 			if (!empty($_FILES['picImg']['tmp_name'])) {
                 if ($this->upload->do_upload('picImg')) {
                     //上传成功
@@ -77,9 +91,13 @@ class Interaction extends MY_Controller
 			$data = array(
 				'title' =>$_POST['title'],
 				'content' =>$_POST['content'],
-				'userId' => $_SESSION['users']['userId'],
-				'tag' => $_POST['tag'],
+				// 'userId' => $_SESSION['users']['userId'],
 			);
+			foreach ($_POST['tag'] as $key => $value) {
+				$tag[$key]['tagid'] = $value;
+			}
+			$data['tag'] = json_encode($tag);
+
 			if (!empty($_FILES['picImg']['tmp_name'])) {
                 if ($this->upload->do_upload('picImg')) {
                     //上传成功

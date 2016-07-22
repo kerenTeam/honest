@@ -34,7 +34,7 @@
           class="am-close">&times;</span>
         </div>
         <div class="am-popup-bd modelHei">
-          <form class="am-form am-padding-top am-padding-bottom" method="post" action="<?=site_url('user/addCounselor')?>" enctype="multipart/form-data">
+          <form class="am-form am-padding-top am-padding-bottom" method="post" action="<?=site_url('user/addsafety')?>" enctype="multipart/form-data">
             <div class="am-g am-margin-top-sm">
               <div class="am-u-sm-2 am-text-right">
                 昵称
@@ -116,29 +116,34 @@
 						</tr>
 					</thead>
 					<tbody id="movies">
-
+          <?php if(!empty($users)):?>
+          <?php foreach($users as $val):?>
 						<tr>
-							<td>1</td>
-							<td><img class="imgSquare" src="assets/img/Home_01_02.png"></td>
-							<td>asdf</td>
-							<td>男</td>
-							<td>13540824624</td>
-							<td>成都</td>
-							<td>局长</td>
+							<td><?=$val['userId'];?></td>
+							<td><img class="imgSquare" src="../<?=$val['headPicImg'];?>"></td>
+							<td><?=$val['userName'];?></td>
+							<td><?=$val['gender'];?></td>
+							<td><?=$val['phoneNumber'];?></td>
+							<td><?=$val['address'];?></td>
+							<td><?=$val['summary'];?></td>
 							<td>
-								<a href="<?=site_url('user/safetyInfo');?>">查看个人信息</a>
+								<a href="<?=site_url('user/info?id=').$val['userId'];?>">查看个人信息</a>
 							</td>
 							<td>
 								<div class="am-btn-toolbar">
 									<div class="am-btn-group am-btn-group-xs">
 										<!-- <a href="<?=site_url('safe/index');?>" class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-fax"></span> 安全查询</a>
 										<a href="<?=site_url('consult/index');?>" class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-file-text-o"></span> 咨询管理</a> -->
-										<a href="<?=site_url('user/cSafety');?>" class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 编辑</a>
-										<a href="<?=site_url('user/deluser');?>" class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash-o"></span> 删除</a>
+										<a href="<?=site_url('user/cSafety?id=').$val['userId'];?>" class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 编辑</a>
+										<a href="<?=site_url('user/deluser?id=').$val['userId'];?>" class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash-o"></span> 删除</a>
 									</div>
 								</div>
 							</td>
 						</tr>
+          <?php endforeach;?>
+          <?php else:?>
+          暂时没有任何用户！
+          <?php endif;?>
 					</tbody>
 				</table>
         <div class="am-cf">

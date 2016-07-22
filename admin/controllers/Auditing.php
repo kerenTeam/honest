@@ -11,6 +11,7 @@ class Auditing extends MY_Controller
 	{
 		parent::__construct();
 		$this->load->view('header');
+		$this->load->model('user_model');
 		
 	}
 
@@ -18,25 +19,36 @@ class Auditing extends MY_Controller
 	// 微信审核
 	public function weixin()
 	{
-
-		$this->load->view('auditing/weixinList');
+		// 审核用户提交信息
+		$data['userpost'] = $this->user_model->UserWeixin();
+		$this->load->view('auditing/weixinList',$data);
 		$this->load->view('footer');
 	}
-
-	// 微信审核详情
-	public function weixinInfo()
+	// 审核是否通过
+	public function adoptuser()
 	{
-
-		$this->load->view('auditing/weixinInfo');
-		$this->load->view('footer');
+		if($_GET){
+			$id = $_GET['id'];
+			$data['state'] = $_GET['state'];
+			if($_GET['state'] == 1){
+				$userid = $_GET['userid'];
+				$user['groupId'] = '5';
+				$this->user_model->editAdopt($id,$data);
+				$this->user_model->GetWeixinUser($userid,$user);
+				redirect('auditing/weixin');exit;
+			}else{
+				$this->user_model->editAdopt($id,$data);
+				redirect('auditing/weixin');exit;
+			}
+		}
 	}
-
 	// 安监局发布审核
 	public function safety()
 	{
-
+		
 		$this->load->view('auditing/safetyList');
 		$this->load->view('footer');
+
 	}
 
 	// 安监局发布审核详情

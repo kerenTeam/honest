@@ -105,12 +105,12 @@
 							<td>
 								<div class="am-btn-toolbar">
 									<div class="am-btn-group am-btn-group-xs">
-	                    				<a data-am-modal="{target: '#password1'}" class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 修改密码</a>
-	                    				<a data-am-modal="{target: '#compile1'}" class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-user"></span>转出为微信用户</a>
+	                    				<a data-am-modal="{target: '#password<?=$val['userId']?>'}" class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 修改密码</a>
+	                    				<a href="<?=site_url('system/getweixinuser?id=').$val['userId'];?>" class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-user"></span>转出为微信用户</a>
 										<a href="<?=site_url('system/deladminuser?id=').$val['userId'];?>" class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash-o"></span> 删除</a>
 
 	                    				<!-- 修改密码弹出框 -->
-					                        <div class="am-popup" id="password1">
+					                        <div class="am-popup" id="password<?=$val['userId']?>">
 					                          <div class="am-popup-inner">
 					                            <div class="am-popup-hd">
 					                              <h4 class="am-popup-title">修改密码</h4>
@@ -118,7 +118,7 @@
 					                              class="am-close">&times;</span>
 					                            </div>
 					                            <div class="am-popup-bd">
-					                              <form class="am-form am-padding-top am-padding-bottom" method="" action="">
+					                              <form class="am-form am-padding-top am-padding-bottom" method="post" action="<?=site_url('system/exitPassword');?>">
 					                    			<div class="am-g am-margin-top-sm">
 					                    				<div class="am-u-sm-3 am-text-right">
 					                    					用户名
@@ -153,6 +153,7 @@
 					                    			</div>
 					                    			<div class="am-g am-margin-top-sm">
 					                    				<div class="am-u-sm-offset-3 am-u-sm-8 am-u-end">
+					                    					<input type="hidden" name="id" value="<?=$val['userId']?>">
 					                    					<button type="submit" class="am-btn am-btn-primary">确定</button>
 					                    				</div>
 					                    			</div>

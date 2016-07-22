@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
-*   用户
+*   资讯
 */
 class Information extends MY_Controller
 {
@@ -13,10 +13,10 @@ class Information extends MY_Controller
 		$this->load->view('header');
 		$this->load->model('tag_model');
 		$this->load->model('consulting_model');
-			 $this->load->library('upload');
+		$this->load->library('upload');
 	}
 
-	// 资讯列表
+	// 列表
 	public function lists()
 	{
 		// 咨询
@@ -35,6 +35,10 @@ class Information extends MY_Controller
 			$data = $_POST;
 			$data['commend'] = 1;
 			$data['userId'] = $_SESSION['users']['userId'];
+			foreach ($_POST['tag'] as $key => $value) {
+				$tag[$key]['tagid'] = $value;
+			}
+			$data['tag'] = json_encode($tag);
 			if (!empty($_FILES['picImg']['tmp_name'])) {
                 if ($this->upload->do_upload('picImg')) {
                     //上传成功
@@ -76,6 +80,11 @@ class Information extends MY_Controller
 			$data = $_POST;
 			$data['userId'] = $_SESSION['users']['userId'];
 			$id = $_POST['publishId'];
+			foreach ($_POST['tag'] as $key => $value) {
+				$tag[$key]['tagid'] = $value;
+			}
+			$data['tag'] = json_encode($tag);
+		
 			if (!empty($_FILES['picImg']['tmp_name'])) {
                 if ($this->upload->do_upload('picImg')) {
                     //上传成功
@@ -156,6 +165,18 @@ class Information extends MY_Controller
 	 	}
 	 }
 
+	 // 搜索咨询
+	 public function search()
+	 {
+	 	if($_POST){
+	 		$sear = $_POST['sare'];
+	 		$data['consulting'] = $this->consulting_model->ConsuleSearch($sear);
+			// 频道
+			$data['tags'] = $this->consulting_model->tags();
+			$this->load->view('information/list',$data);
+			$this->load->view('footer');
+	 	}
+	 }
 }
 
 

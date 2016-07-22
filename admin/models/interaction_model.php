@@ -80,7 +80,7 @@ class Interaction_model extends CI_Model
 	public function setTaglist($tag)
 	{
 
-		$sql ="SELECT a.userName,b.publishId, b.picImg, b.tag, b.title, b.content, b.publishData from honest_member as a, honest_mypublish as b where a.userId = b.userId and b.tag = $tag order by b.publishData desc";
+		$sql ="SELECT a.userName,b.publishId, b.picImg, b.tag, b.title, b.content, b.publishData from honest_member as a, honest_mypublish as b where a.userId = b.userId and b.tag like '%$tag%' and b.commend = '0' order by b.publishData desc";
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}
@@ -88,7 +88,8 @@ class Interaction_model extends CI_Model
 	// search 搜索
 	public function Searchlist($data)
 	{
-		$query = $this->db->like('title', $data, 'both')->order_by('publishData','desc')->get(self::TBL_MYPUB);
+		$where['commend'] = '0';
+		$query = $this->db->where($where)->like('title', $data, 'both')->order_by('publishData','desc')->get(self::TBL_MYPUB);
 		return $query->result_array();
 	}
 	

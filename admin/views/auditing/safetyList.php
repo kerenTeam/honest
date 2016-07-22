@@ -22,22 +22,20 @@
     <form>
 		<div class="am-g">
 			<div class="am-u-sm-12">
-				<table class="am-table am-table-striped am-table-hover am-main am-table-centered am-table-bordered">
-					<thead>
-						<tr>
-							<th>ID</th><th class="table-title">头像</th><th class="table-type">姓名</th><th class="table-type">性别</th><th class="table-type">手机号</th><th class="table-type">所在地</th><th class="table-date am-hide-sm-only">职业</th><th class="table-date am-hide-sm-only">更多</th><th class="table-set">审核</th>
-						</tr>
-					</thead>
+				   <table class="am-table am-table-striped am-table-hover am-main am-table-centered am-table-bordered">
+            <thead>
+              <tr>
+                <th>ID</th><th class="table-title">缩略图</th><th class="table-type">标题</th><th class="table-type">简介</th><th class="table-type">发布人</th><th class="table-date am-hide-sm-only">发布日期</th><th	class='table-set'>详细内容</th><th class="table-set">操作</th>
+              </tr>
+         	 </thead>
 					<tbody id="movies">
-
 						<tr>
 							<td>1</td>
 							<td><img class="imgSquare" src="assets/img/Home_01_02.png"></td>
 							<td>asdf</td>
 							<td>男</td>
 							<td>13540824624</td>
-							<td>成都</td>
-							<td>局长</td>
+							<td>20</td>
 							<td>
 								<a href="<?=site_url('auditing/safetyInfo');?>">查看详情</a>
 							</td>

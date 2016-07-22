@@ -1,0 +1,1 @@
+{"file":{"name":"image.png","type":"image\/png","tmp_name":"D:\\SOFT_PHP_PACKAGE\\phptmp\\phpAEF6.tmp","error":0,"size":807671}}

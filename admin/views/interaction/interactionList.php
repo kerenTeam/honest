@@ -108,7 +108,7 @@
               频道
             </div>
             <div class="am-u-sm-8 am-u-end">
-              <select data-am-selected="{btnSize: 'sm'}" name="tag">
+              <select multiple data-am-selected="{btnSize: 'sm'}" name="tag[]">
               <?php foreach($tags as $val):?>
                 <option value="<?=$val['tag']?>"><?=$val['tagName']?></option>
               <?php endforeach;?>

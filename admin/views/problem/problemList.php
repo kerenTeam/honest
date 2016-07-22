@@ -5,12 +5,12 @@
 
    <div class="am-g am-padding-bottom-lg">
     <div class="am-u-sm-3 am-u-md-3" style="min-width: 300px;">
-    <form action="" method="">
+    <form action="<?=site_url('problem/Search');?>" method="post">
     
       <div class="am-input-group am-input-group-sm">
-        <input type="text" class="am-form-field">
+        <input type="text" class="am-form-field" name="sear">
         <span class="am-input-group-btn">
-          <button class="am-btn am-btn-default" type="button"><span class="am-icon-search"></span>搜索</button>
+          <button class="am-btn am-btn-default" type="submit"><span class="am-icon-search"></span>搜索</button>
         </span>
       </div>
     </form>
@@ -29,8 +29,7 @@
       <div class="am-popup-inner">
         <div class="am-popup-hd">
           <h4 class="am-popup-title">新增</h4>
-          <span data-am-modal-close
-          class="am-close">&times;</span>
+          <span data-am-modal-close class="am-close">&times;</span>
         </div>
         <div class="am-popup-bd">
           <form class="am-form am-padding-top am-padding-bottom" method="post" action="<?=site_url('problem/add')?>">
@@ -65,6 +64,7 @@
                 </tr>
             </thead>
             <tbody id="movies">
+            <?php if(!empty($problem)): ?>
             <?php foreach($problem as $val):?>
               <tr>
                 <td><input type="checkbox" class="checkList"></td>
@@ -111,15 +111,15 @@
                         </div>
                       </div>
                     </div>
-
-
-
-                      <a href="#" class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash-o"></span> 删除</a>
+                      <a href="<?=site_url('problem/delProblem?id=').$val['questionId'];?>" class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash-o"></span> 删除</a>
                     </div>
                   </div>
                 </td>
               </tr>
             <?php endforeach;?>
+          <?php else:?>
+            <th colspan="6" >没有问题！</th>
+          <?php endif;?>
             </tbody>
           </table>
         <div class="am-cf">

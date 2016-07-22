@@ -3,13 +3,13 @@
       <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">安监局</strong> / <small>编辑</small></div>
     </div>
     <hr>
-	<form class="am-form am-padding-top am-padding-bottom" method="post" action="<?=site_url('user/editcompile');?>" enctype="multipart/form-data">
+	<form class="am-form am-padding-top am-padding-bottom" method="post" action="<?=site_url('user/EditSafety');?>" enctype="multipart/form-data">
 		<div class="am-g am-margin-top-sm">
 			<div class="am-u-sm-4 am-u-md-2 am-text-right">
 				姓名
 			</div>
 			<div class="am-u-sm-8 am-u-md-4 am-u-end">
-				<input type="text" class="am-input-sm" value="asdf" name="userName" required>
+				<input type="text" class="am-input-sm" value="<?=$users['userName'];?>" name="userName" required>
 			</div>
 		</div>
 		<div class="am-g am-margin-top-sm">
@@ -17,9 +17,9 @@
 				性别
 			</div>
 			<div class="am-u-sm-8 am-u-md-4 am-u-end">
-				<label><input type="radio" name="gender" value="男" >男</label>
+				<label><input type="radio" name="gender" value="男" <?php if($users['gender'] == '男'){echo "checked";} ?>>男</label>
 				&nbsp;&nbsp;&nbsp;
-				<label><input type="radio" name="gender" value="女 " >女</label>
+				<label><input type="radio" name="gender" value="女" <?php if($users['gender'] == '女'){echo "checked";} ?> >女</label>
 			</div>
 		</div>
 		<div class="am-g am-margin-top-sm">
@@ -27,9 +27,9 @@
 				头像
 			</div>
 			<div class="am-u-sm-8 am-u-md-4 am-u-end">
-				<input type="file" id="imgUpload" name="picImg" onchange="previewImage(this)" class="upload-add" required>
+				<input type="file" id="imgUpload" name="picImg" onchange="previewImage(this)" class="upload-add" >
 	            <br>
-	            <div id="preview"><input type="hidden" name="picImg" value="assets/img/Home_01_02.png"> <img class="minImg" src="assets/img/Home_01_02.png"> </div>
+	            <div id="preview"><input type="hidden" name="picImg" value="<?=$users['headPicImg'];?>"> <img class="minImg" src="../<?=$users['headPicImg']?>"> </div>
 			</div>
 		</div>
 		
@@ -38,7 +38,7 @@
 				所在地
 			</div>
 			<div class="am-u-sm-8 am-u-md-4 am-u-end">
-				<input type="text" class="am-input-sm" value="成都" name="address" required>
+				<input type="text" class="am-input-sm" value="<?=$users['address'];?>" name="address" required>
 			</div>
 		</div>
 		<div class="am-g am-margin-top-sm">
@@ -46,7 +46,7 @@
 				职业
 			</div>
 			<div class="am-u-sm-8 am-u-md-4 am-u-end">
-				<input type="text" class="am-input-sm" value="局长" name="occupation" required>
+				<input type="text" class="am-input-sm" value="<?=$users['occupation'];?>" name="occupation" required>
 			</div>
 		</div>
 		<div class="am-g am-margin-top-sm">
@@ -54,12 +54,12 @@
 				简介
 			</div>
 			<div class="am-u-sm-8 am-u-md-4 am-u-end">
-				<textarea name="">csd</textarea>
+				<textarea name="summary"><?=$users['summary'];?></textarea>
 			</div>
 		</div>
 		<div class="am-g am-margin-top-sm">
 			<div class="am-u-sm-offset-2 am-u-sm-4 am-u-end">
-					<input type="hidden" name="id" value="" /> 
+					<input type="hidden" name="id" value="<?=$users['userId'];?>" /> 
 				<button type="submit" class="am-btn am-btn-primary">确定</button>
 			</div>
 		</div>

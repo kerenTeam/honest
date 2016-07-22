@@ -16,12 +16,12 @@
 			<div class="am-u-sm-4 am-u-md-2 am-text-right">
 				频道
 			</div>
+			<?php $tag = json_decode($cons['tag'],true); ?>
 			<div class="am-u-sm-8 am-u-md-4 am-u-end">
-				<select data-am-selected="{btnSize: 'sm'}" name="tag">
+				<select multiple data-am-selected="{btnSize: 'sm'}" name="tag[]">
 				<?php foreach($tags as $val):?>
-					<option value="<?=$val['tag']?>" <?php if($cons['tag'] == $val['tag']){echo "selected";}?>><?=$val['tagName']?></option>
+					<option value="<?=$val['tag']?>"<?php foreach($tag as $v):?> <?php if($v['tagid'] == $val['tag']){echo "selected";}?><?php endforeach;?>><?=$val['tagName']?></option>
 				<?php endforeach;?>
-					
 				</select>
 			</div>
 		</div>

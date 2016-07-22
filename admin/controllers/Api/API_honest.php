@@ -11,7 +11,7 @@ class API_honest extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->model('honestapi_model');
-		 $this->load->library('upload');
+		 // $this->load->library('upload');
 	}
 	// banner
 	public function banner()
@@ -57,24 +57,6 @@ class API_honest extends CI_Controller
 			}
 		}
 	}
-
-	// // 咨询信息详情
-	// public function consInfo(){
-	// 	if($_GET){
-	// 		$callback = $_GET['callback'];
-	// 		$id= $_GET['id'];	
-	// 		$listinfo = $this->honestapi_model->ConsultingInfo($id);
-	// 		foreach ($listinfo as $key => $value) {
-	// 			$listinfo[$key]['picImg'] = IP.$value['picImg'];
-	// 		}
-	// 		$json = json_encode($listinfo);
-	// 		if(empty($listinfo)){
-	// 			echo '0';
-	// 		}else{
-	// 			echo "$callback($json)";
-	// 		}
-	// 	}
-	// }
 
 	//交流互动
 	public function findAll()
@@ -167,7 +149,7 @@ class API_honest extends CI_Controller
 		$channel = $this->honestapi_model->Channel();
 		$json = json_encode($channel);
 		if(empty($channel)){
-			echo "0";
+			echo "$callback(0)";
 		}else{
 			echo "$callback($json)";
 		}
@@ -258,7 +240,6 @@ class API_honest extends CI_Controller
 					echo "$callback(2)"; 
 				}else{
 					// 登陆成功
-					//$json = '{"result":1,"phoneNumber":"13453475486"}';
 					echo "$callback(1)";
 				}
 			}else{
@@ -323,9 +304,43 @@ class API_honest extends CI_Controller
 	}
 	
 	// 修改个人资料
-	
+	public function ExitUserInfo()
+	{
+		if($_POST){
+			$userid = $_POST['userid'];
+			$data= array(
+				'userName'=>$_POST['userName'],
+				'userName'=>$_POST['userName'],
+				'userName'=>$_POST['userName'],
+				'userName'=>$_POST['userName'],
+			);
+			if (!empty($_FILES['ffile']['tmp_name'])) {
+				$config['upload_path']      = './upload/imgs/';
+	        	$config['allowed_types']    = 'gif|jpg|png';
+				$config['file_name']     =date("Y-m-d_His");
+	        	$this->load->library('upload', $config);
+		        if ( ! $this->upload->do_upload('ffile'))
+		        {
+		            echo 0;exit;
+		        }
+		        else
+		        {
+		         	$fileinfo = $this->upload->data();
+		         	$data['headPicImg'] = 'upload/imgs/'.$fileinfo['file_name'];
+		        }
+    		}else{
+    			$data['headPicImg'] = $_POST['headPicImg'];
+    		}
+    		if($this->honestapi_model->EditUser($id,$data)){
+    			echo "1";
+    		}else{
+    			echo "2";
+    		}
 
-	// 关于我的  +  点击tag返回 
+		}
+	}
+
+	// 关于我的  
 	public function tagformAll()
 	{
 		if($_GET){
@@ -438,45 +453,116 @@ class API_honest extends CI_Controller
 		}
 	}
 
+	//  用户证书上传
+	public function MoreFileUp()
+	{
+		file_put_contents('test.log', var_export($_GET,true)."\r\n",FILE_APPEND);
+		$a = json_encode($_FILES);
+		file_put_contents('text.txt',$a);
+		echo "1";
+		exit;
+		// file_put_contents('test.log', $_POST,FILE_APPEND);
+		// file_put_contents('test.log', var_export($_FILES,true)."\r\n",FILE_APPEND);
+		  if(move_uploaded_file($_FILES['file']['tmp_name'], './upload/charimg/'.$_FILES["file"]["name"])){
+		  	echo "1";
+		  }else{
+		  	echo "0";
+		  }
+	}
+
+	// 修改用户资料
+	public function AccountData()
+	{
+		file_put_contents('test.log', var_export($_POST,true)."\r\n",FILE_APPEND);
+		echo "1";
+		exit;
+		// file_put_contents('test.log', $_POST,FILE_APPEND);
+	//	file_put_contents('test.log', var_export($_FILES,true)."\r\n",FILE_APPEND);
+		// echo "1";
+		$data = $_POST;
+		$user = $this->honestapi_model->Loginuser($_POST['phoneNumber']);
+		$data['userId'] = $user['userId'];
+
+		if (!empty($_FILES['ffile']['tmp_name'])) {
+			$config['upload_path']      = './upload/headPicImg/';
+        	$config['allowed_types']    = 'gif|jpg|png';
+			$config['file_name']     =date("Y-m-d_His");
+        	$this->load->library('upload', $config);
+	        if ( ! $this->upload->do_upload('ffile'))
+	        {
+	            echo 0;
+	        }
+	        else
+	        {
+	         	$fileinfo = $this->upload->data();
+	        	$data['headPicImg'] = 'upload/headPicImg/'.$fileinfo['file_name'];
+ 	        }
+    	}
+
+    	if($this->honestapi_model->UserInfo($data)){
+    		echo "1";
+    	}else{
+    		echo "2";
+    	}
+
+	}
+
+	// 聊天上传图片
+	public function ChatImg()
+	{
+		file_put_contents('test.log', var_export($_FILES,true)."\r\n",FILE_APPEND);
+		if (!empty($_FILES['ffile']['tmp_name'])) {
+			$config['upload_path']      = './upload/charimg/';
+        	$config['allowed_types']    = 'gif|jpg|png';
+			$config['file_name']     =date("Y-m-d_His");
+        	$this->load->library('upload', $config);
+	        if ( ! $this->upload->do_upload('ffile'))
+	        {
+	            echo 0;
+	        }
+	        else
+	        {
+	         	$fileinfo = $this->upload->data();
+	        	$url = IP.'upload/charimg/'.$fileinfo['file_name'];
+	        	echo $url;
+ 	        }
+    	}
+	}
+
 
 	// 发布信息
 	public function ReleasInformatione()
 	{
-		if (!empty($_FILES['upload_file']['tmp_name'])) {
-            if ($this->upload->do_upload('upload_file')) {
-                //上传成功
-                $fileinfo = $this->upload->data();
-                $data = '../upload/' . $fileinfo['file_name'];
-                echo $data;
-                echo "1";
-              } else {
-                //上传失败
-             	echo "0";
-              }
-        }else{
-            
-            	echo "你还没有上传图片";
-        }
-
-		// if(move_uploaded_file($_FILES['upload_file']['tmp_name'],'/upload/img/' . $_FILES['upload_file']['name'])){
-		// echo "1";
-		// } else{
-		// 	echo "2";
-		// }
+	
+		//$tag = json_decode($_POST['tag'],true);
+		file_put_contents('test.log',var_export($_POST,true)."\r\n",FILE_APPEND);
+		$a = json_encode($_POST);
+		file_put_contents('text.txt',$a);
 		
-		// echo './upload/img/' . $_FILES['upload_file']['name'];
-  //       $data = 'This data is from server!' //返回数据，这行字将通过URL返回给浏览器
-
-  //      header('Location:' . $_POST['tmpurl'] . '?data=' . $_data); //上传完成后使iframe直接跳转至$_POST['tmpurl']
+		echo "1";
+		exit;
+	// 	if($_POST){
+	// 		$data = $_POST;
+	// 		$user = $this->honestapi_model->Loginuser($_POST['phoneNumber']);
+	// 		$data['userId'] = $user['userId'];
+	// 		if (!empty($_FILES['ffile']['tmp_name'])) {
+	// 			$config['upload_path'] = './upload/umeditor/';
+	//         	$config['allowed_types'] = 'gif|jpg|png';
+	// 			$config['file_name']     =date("Y-m-d_His");
+	//         	$this->load->library('upload', $config);
+	// 	        if ( ! $this->upload->do_upload('ffile')){
+	// 	            echo 0;
+	// 	        }
+	// 	        else{
+	// 	        	echo 1;
+	// 	         	$fileinfo = $this->upload->data();
+	// 	        	$data['picImg'] = 'upload/umeditor/'.$fileinfo['file_name'];
+	//  	        }
+ //    		}
+	// 	}
 
 	}
 
-
-
-	// 咨询记录
-	
-
-	// 发布问题
 	
 
 }

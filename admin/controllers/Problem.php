@@ -47,8 +47,31 @@ class Problem extends MY_Controller
 		$this->load->view('footer');
 	}
 
-	// 删除
-	
+	// 删除问提解答
+	public function delproblem()
+	{
+		if($_GET){
+			$id = $_GET['id'];
+			if($this->problem_model->delProblem($id)){
+					echo "<script>alert('删除成功！');history.go(-1);location.reload();</script>";exit;
+			}else{
+					echo "<script>alert('删除失败！');history.go(-1);location.reload();</script>";exit;
+			}
+		}
+	}
+
+	// 搜索
+	public function Search()
+	{
+		if($_POST){
+			$sear = $_POST['sear'];
+			$data['problem'] = $this->problem_model->ProSearch($sear);
+			$this->load->view('problem/problemList',$data);
+			$this->load->view('footer');
+		}
+	}
+
+
 }
 
 

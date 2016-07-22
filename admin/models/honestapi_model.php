@@ -16,6 +16,8 @@ class Honestapi_model extends CI_Model
 	const TBL_COMMENT = "comment";
 	// 频道
 	const TBL_TAG = "mytag";
+	// 用户资料审核
+	const TBL_USERINFO = "userinfo";
 	// 系统设置
 	const TBL_SYATEM = "system";
 
@@ -140,6 +142,18 @@ class Honestapi_model extends CI_Model
   	 	return $this->db->insert(self::TBL_MYPUBLISH,$data);
   	 }
 
+  	 // 更改用户信息
+  	 public function EditUser($id,$data)
+  	 {
+  	 	$where['userId'] = $id;
+  	 	return $this->db->where($where)->update(self::TBL_MEMBER,$data);
+  	 }
+
+  	 //提交用户资料
+  	public function UserInfo($data)
+  	{
+  		return $this->db->insert(self::TBL_USERINFO,$data);
+  	}
 }	
 
 ?>
